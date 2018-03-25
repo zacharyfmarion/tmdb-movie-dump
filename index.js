@@ -1,5 +1,5 @@
 /**
- * Small node script to save all the movies stored in the tMDB database in a flat
+ * Small node script to save all movies stored in the tMDB database in a flat
  * JSON format that can be read by pandas for data processing
  *
  * @author Zachary Marion
