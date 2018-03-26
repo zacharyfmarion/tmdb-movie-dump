@@ -14,6 +14,7 @@ import fs from 'fs';
 program
   .version('0.1.0')
   .option('-m, --max-entries [entries]', 'Max number of entries to process')
+  .option('-o, --out-file [filename]', 'File name for the json dump')
   .parse(process.argv);
 
 // Attributes of the movie object that we will save
@@ -55,13 +56,17 @@ function processMovie(movie) {
  * @param {array} movies - Array of tMDB movie objects
  */
 function saveMovies(movies) {
-  fs.writeFile('movies.json', JSON.stringify({ movies: movies }), err => {
-    if (err) {
-      console.log('Failed to save movies');
-      return;
+  fs.writeFile(
+    program.outFile || 'movies.json',
+    JSON.stringify({ movies: movies }),
+    err => {
+      if (err) {
+        console.log('Failed to save movies');
+        return;
+      }
+      console.log('Movies saved');
     }
-    console.log('Movies saved');
-  });
+  );
 }
 
 // Get the id of the latest movie, which is constantly updated on the API

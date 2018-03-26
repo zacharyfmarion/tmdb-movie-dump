@@ -132,7 +132,7 @@ var _fs2 = _interopRequireDefault(_fs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_commander2.default.version('0.1.0').option('-m, --max-entries [entries]', 'Max number of entries to process').parse(process.argv);
+_commander2.default.version('0.1.0').option('-m, --max-entries [entries]', 'Max number of entries to process').option('-o, --out-file [filename]', 'File name for the json dump').parse(process.argv);
 
 // Attributes of the movie object that we will save
 
@@ -174,7 +174,7 @@ function processMovie(movie) {
  * @param {array} movies - Array of tMDB movie objects
  */
 function saveMovies(movies) {
-  _fs2.default.writeFile('movies.json', JSON.stringify({ movies: movies }), function (err) {
+  _fs2.default.writeFile(_commander2.default.outFile || 'movies.json', JSON.stringify({ movies: movies }), function (err) {
     if (err) {
       console.log('Failed to save movies');
       return;
