@@ -66,51 +66,43 @@ var getMovies = function () {
             // We keep iterating until we get to the latest movie
 
           case 6:
-            if (!(movieIndex <= 10)) {
-              _context2.next = 21;
+            if (!(!_commander2.default.maxEntries || numMovies <= parseInt(_commander2.default.maxEntries))) {
+              _context2.next = 19;
               break;
             }
 
-            if (!(_commander2.default.maxEntries && numMovies >= parseInt(_commander2.default.maxEntries))) {
-              _context2.next = 9;
-              break;
-            }
-
-            return _context2.abrupt('break', 21);
-
-          case 9:
-            _context2.prev = 9;
-            _context2.next = 12;
+            _context2.prev = 7;
+            _context2.next = 10;
             return (0, _tmdbRequest2.default)('/movie/' + movieIndex);
 
-          case 12:
+          case 10:
             res = _context2.sent;
 
             if (validMovie(res)) {
               movies.push(processMovie(res));
               numMovies++;
             }
-            _context2.next = 18;
+            _context2.next = 16;
             break;
 
-          case 16:
-            _context2.prev = 16;
-            _context2.t0 = _context2['catch'](9);
+          case 14:
+            _context2.prev = 14;
+            _context2.t0 = _context2['catch'](7);
 
-          case 18:
+          case 16:
             movieIndex++;
             _context2.next = 6;
             break;
 
-          case 21:
+          case 19:
             saveMovies(movies);
 
-          case 22:
+          case 20:
           case 'end':
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[9, 16]]);
+    }, _callee2, this, [[7, 14]]);
   }));
 
   return function getMovies() {
