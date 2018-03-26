@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * Small node script to save all movies stored in the tMDB database in a flat
  * JSON format that can be read by pandas for data processing
@@ -6,7 +8,13 @@
  */
 
 import tmdbRequest from './tmdbRequest';
+import program from 'commander';
 import fs from 'fs';
+
+program
+  .version('0.1.0')
+  .option('-m, --max-entries [entries]', 'Max number of entries to process')
+  .parse(process.argv);
 
 // Attributes of the movie object that we will save
 const SAVED_ATTRIBUTES = [
@@ -72,12 +80,15 @@ async function getMovies() {
   let movies = [];
   const latestMovieId = await getLatestMovieId();
   let movieIndex = 1;
+  let numMovies = 0;
   // We keep iterating until we get to the latest movie
   while (movieIndex <= 10) {
+    if (program.maxEntries && numMovies >= parseInt(program.maxEntries)) break;
     try {
       const res = await tmdbRequest(`/movie/${movieIndex}`);
       if (validMovie(res)) {
         movies.push(processMovie(res));
+        numMovies++;
       }
     } catch (err) {}
     movieIndex++;
