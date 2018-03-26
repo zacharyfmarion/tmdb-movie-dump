@@ -87,8 +87,7 @@ async function getMovies() {
   let movieIndex = 1;
   let numMovies = 0;
   // We keep iterating until we get to the latest movie
-  while (movieIndex <= 10) {
-    if (program.maxEntries && numMovies >= parseInt(program.maxEntries)) break;
+  while (!program.maxEntries || numMovies > parseInt(program.maxEntries)) {
     try {
       const res = await tmdbRequest(`/movie/${movieIndex}`);
       if (validMovie(res)) {
